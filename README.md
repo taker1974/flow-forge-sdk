@@ -36,7 +36,7 @@ In your application, in pom.xml:
 </dependencies>
 ```
 
-See example implementation <link to example implementation of your own unique block type>
+See example implementation _link to example implementation of your own unique block type_.
 
 ## Licensing
 
@@ -47,4 +47,3 @@ This module is distributed under the Apache 2.0 license. For details, see the LI
 Konstantin Terskikh  
 Email: <kostus.online.1974@yandex.ru>, <kostus.online@gmail.com>  
 Saint Petersburg, 2025
-
