@@ -23,6 +23,7 @@ import jakarta.validation.constraints.NotNull;
 import ru.spb.tksoft.common.exception.ConfigurationMismatchException;
 import ru.spb.tksoft.common.exception.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Block;
+import ru.spb.tksoft.flowforge.sdk.contract.BlockPlugin;
 import ru.spb.tksoft.flowforge.sdk.contract.Line;
 import ru.spb.tksoft.flowforge.sdk.contract.LineJunction;
 import ru.spb.tksoft.flowforge.sdk.contract.RunnableStateChangeListener;
@@ -73,6 +74,41 @@ public abstract class BlockBaseImpl implements Block {
     private String errorMessage = "";
 
     private volatile boolean modified;
+
+    /**
+     * Get the block type id from the @BlockPlugin annotation.
+     * 
+     * @param clazz - the class to get the annotation from.
+     * @return the block type id from the annotation.
+     * @throws ConfigurationMismatchException if the annotation is not present.
+     */
+    protected static String getBlockTypeIdFromAnnotation(Class<?> clazz) {
+        BlockPlugin annotation = clazz.getAnnotation(BlockPlugin.class);
+        if (annotation == null) {
+            throw new ConfigurationMismatchException(
+                    "Class " + clazz.getName() + " must be annotated with @BlockPlugin");
+        }
+        return annotation.blockTypeId();
+    }
+
+    @SuppressWarnings("java:S125")
+    // CHECKSTYLE:OFF
+    // @formatter:off
+    /*
+     * Put this code in descendants.
+     * 
+     * // Define the block type id for caching. 
+     * private static final String BLOCK_TYPE_ID =
+     *     getBlockTypeIdFromAnnotation(ChatGPT.class);
+     * 
+     * // Implement the getBlockTypeId() method.
+     * @Override 
+     * public String getBlockTypeId() { 
+     *     return BLOCK_TYPE_ID; 
+     * }
+     */
+    // @formatter:on
+    // CHECKSTYLE:ON
 
     /**
      * Set the error.
