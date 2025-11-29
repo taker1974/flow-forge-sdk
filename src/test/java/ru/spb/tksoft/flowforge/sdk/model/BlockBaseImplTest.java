@@ -55,11 +55,6 @@ class BlockBaseImplTest {
         TestBlock(String internalBlockId, String blockTypeId, String defaultInputText) {
             super(internalBlockId, blockTypeId, defaultInputText);
         }
-
-        @Override
-        public String getPromptText() {
-            return "prompt";
-        }
     }
 
     @BeforeEach
