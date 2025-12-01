@@ -20,11 +20,11 @@ import java.util.List;
 import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.spb.tksoft.common.exception.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Block;
 import ru.spb.tksoft.flowforge.sdk.contract.Line;
 import ru.spb.tksoft.flowforge.sdk.enumeration.LineState;
-import ru.spb.tksoft.common.exception.ConfigurationMismatchException;
+import ru.spb.tksoft.common.exceptions.ConfigurationMismatchException;
 
 /**
  * Line implementation.

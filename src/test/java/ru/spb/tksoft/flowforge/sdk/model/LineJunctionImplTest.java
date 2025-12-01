@@ -14,15 +14,14 @@
 
 package ru.spb.tksoft.flowforge.sdk.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.spb.tksoft.common.exception.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Line;
 import ru.spb.tksoft.flowforge.sdk.enumeration.LineState;
 
@@ -42,8 +41,9 @@ class LineJunctionImplTest {
 
     @Test
     void testConstructor() {
-        assertThat(junction.hasLines()).isFalse();
-        assertThat(junction.getState()).isEqualTo(LineState.OFF);
+        assertThat(junction)
+                .satisfies(j -> assertThat(j.hasLines()).isFalse())
+                .satisfies(j -> assertThat(j.getState()).isEqualTo(LineState.OFF));
     }
 
     @Test
@@ -122,9 +122,10 @@ class LineJunctionImplTest {
 
         String result = junction.getResultString();
 
-        assertThat(result).contains("result1");
-        assertThat(result).contains("result2");
-        assertThat(result).doesNotContain("result3");
+        assertThat(result)
+                .contains("result1")
+                .contains("result2")
+                .doesNotContain("result3");
     }
 
     @Test
@@ -143,8 +144,9 @@ class LineJunctionImplTest {
 
         String result = junction.getResultString();
 
-        assertThat(result).contains("result1");
-        assertThat(result).doesNotContain("null");
+        assertThat(result)
+                .contains("result1")
+                .doesNotContain("null");
     }
 
     @Test

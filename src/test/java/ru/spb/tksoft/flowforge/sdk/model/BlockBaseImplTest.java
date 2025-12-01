@@ -14,8 +14,7 @@
 
 package ru.spb.tksoft.flowforge.sdk.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -25,8 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.spb.tksoft.common.exception.ConfigurationMismatchException;
-import ru.spb.tksoft.common.exception.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.ConfigurationMismatchException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Block;
 import ru.spb.tksoft.flowforge.sdk.contract.Line;
 import ru.spb.tksoft.flowforge.sdk.contract.LineJunction;
@@ -150,15 +149,17 @@ class BlockBaseImplTest {
     @Test
     void testGetInputJunction() {
         LineJunction junction = block.getInputJunction();
-        assertThat(junction).isNotNull();
-        assertThat(junction.hasLines()).isFalse();
+        assertThat(junction)
+                .isNotNull()
+                .satisfies(j -> assertThat(j.hasLines()).isFalse());
     }
 
     @Test
     void testGetOutputJunction() {
         LineJunction junction = block.getOutputJunction();
-        assertThat(junction).isNotNull();
-        assertThat(junction.hasLines()).isFalse();
+        assertThat(junction)
+                .isNotNull()
+                .satisfies(j -> assertThat(j.hasLines()).isFalse());
     }
 
     @Test

@@ -14,8 +14,7 @@
 
 package ru.spb.tksoft.flowforge.sdk.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,8 +23,8 @@ import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.spb.tksoft.common.exception.ConfigurationMismatchException;
-import ru.spb.tksoft.common.exception.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.ConfigurationMismatchException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Block;
 import ru.spb.tksoft.flowforge.sdk.enumeration.LineState;
 
@@ -56,9 +55,10 @@ class LineImplTest {
 
     @Test
     void testConstructor() {
-        assertThat(line.getInternalLineId()).isEqualTo(LINE_ID);
-        assertThat(line.isModified()).isTrue();
-        assertThat(line.getState()).isEqualTo(LineState.OFF);
+        assertThat(line)
+                .satisfies(l -> assertThat(l.getInternalLineId()).isEqualTo(LINE_ID))
+                .satisfies(l -> assertThat(l.isModified()).isTrue())
+                .satisfies(l -> assertThat(l.getState()).isEqualTo(LineState.OFF));
     }
 
     @Test
@@ -157,8 +157,9 @@ class LineImplTest {
     void testSetState() {
         line.setState(LineState.ON);
 
-        assertThat(line.getState()).isEqualTo(LineState.ON);
-        assertThat(line.isModified()).isTrue();
+        assertThat(line)
+                .satisfies(l -> assertThat(l.getState()).isEqualTo(LineState.ON))
+                .satisfies(l -> assertThat(l.isModified()).isTrue());
     }
 
     @Test
@@ -197,8 +198,9 @@ class LineImplTest {
         line.resetModified();
         line.reset();
 
-        assertThat(line.getState()).isEqualTo(LineState.OFF);
-        assertThat(line.isModified()).isTrue();
+        assertThat(line)
+                .satisfies(l -> assertThat(l.getState()).isEqualTo(LineState.OFF))
+                .satisfies(l -> assertThat(l.isModified()).isTrue());
     }
 
     @Test

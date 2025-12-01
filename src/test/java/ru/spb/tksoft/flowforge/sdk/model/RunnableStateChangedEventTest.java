@@ -14,7 +14,7 @@
 
 package ru.spb.tksoft.flowforge.sdk.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import ru.spb.tksoft.flowforge.sdk.enumeration.RunnableState;

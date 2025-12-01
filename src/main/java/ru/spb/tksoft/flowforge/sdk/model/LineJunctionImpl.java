@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.validation.constraints.NotNull;
 import lombok.NoArgsConstructor;
-import ru.spb.tksoft.common.exception.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
 import ru.spb.tksoft.flowforge.sdk.contract.Line;
 import ru.spb.tksoft.flowforge.sdk.contract.LineJunction;
 import ru.spb.tksoft.flowforge.sdk.enumeration.LineState;

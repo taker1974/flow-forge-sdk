@@ -14,12 +14,11 @@
 
 package ru.spb.tksoft.flowforge.sdk.model;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.spb.tksoft.common.exception.ObjectAlreadyExistsException;
+import ru.spb.tksoft.common.exceptions.ObjectAlreadyExistsException;
 
 /**
  * Tests for Context.
@@ -126,7 +125,7 @@ class ContextTest {
         assertThat(context.get("string")).isEqualTo("value");
         assertThat(context.get("integer")).isEqualTo(42);
         assertThat(context.get("double")).isEqualTo(3.14);
-        assertThat(context.get("boolean")).isEqualTo(true);
+        assertThat((Boolean) context.get("boolean")).isTrue();
         assertThat(context.get("object")).isNotNull();
     }
 }

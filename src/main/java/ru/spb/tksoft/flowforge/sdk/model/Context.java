@@ -17,8 +17,8 @@ package ru.spb.tksoft.flowforge.sdk.model;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.RequiredArgsConstructor;
-import ru.spb.tksoft.common.exception.NullArgumentException;
-import ru.spb.tksoft.common.exception.ObjectAlreadyExistsException;
+import ru.spb.tksoft.common.exceptions.NullArgumentException;
+import ru.spb.tksoft.common.exceptions.ObjectAlreadyExistsException;
 
 /**
  * Context for the block.
