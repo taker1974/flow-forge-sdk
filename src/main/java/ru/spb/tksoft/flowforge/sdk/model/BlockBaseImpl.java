@@ -93,7 +93,7 @@ public abstract class BlockBaseImpl implements Block {
                         "Has Error: %s" + NL +
                         "Error Message: %s" + NL +
                         "Modified: %s",
-                internalBlockId, blockTypeId, defaultInputText, inputText, resultText, state,
+                internalBlockId, blockTypeId, defaultInputText, getInputText(), resultText, state,
                 hasError, errorMessage, modified);
     }
 

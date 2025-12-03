@@ -419,5 +419,19 @@ class BlockBaseImplTest {
                 .contains("State: " + RunnableState.DONE)
                 .contains("Modified: false");
     }
+
+    @Test
+    void testGetPrintableStateWithBlankInputText() {
+        // Set inputText to blank - getInputText() should return defaultInputText
+        block.setInputText("   ");
+
+        String printableState = block.getPrintableState();
+
+        // getPrintableState() should use getInputText(), which returns defaultInputText
+        // when inputText is blank, not the blank string itself
+        assertThat(printableState)
+                .contains("Input Text: " + DEFAULT_INPUT_TEXT)
+                .doesNotContain("Input Text:    "); // Should not show blank spaces
+    }
 }
 
