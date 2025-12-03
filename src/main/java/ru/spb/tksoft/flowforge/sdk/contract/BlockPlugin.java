@@ -29,6 +29,13 @@ import java.lang.annotation.Target;
 public @interface BlockPlugin {
 
     /**
+     * Get the engine version.
+     * 
+     * @return the engine version.
+     */
+    String engineVersion();
+
+    /**
      * Get the block type id.
      * 
      * @return the block type id.
