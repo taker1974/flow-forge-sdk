@@ -64,6 +64,13 @@ public interface Block extends Runnable, Modifiable {
     String getResultText();
 
     /**
+     * Get the printable state.
+     * 
+     * @return the printable state in a human readable format.
+     */
+    String getPrintableState();
+
+    /**
      * Get the input junction.
      * 
      * @return the input junction.

@@ -76,6 +76,28 @@ public abstract class BlockBaseImpl implements Block {
     private volatile boolean modified;
 
     /**
+     * Get the printable state.
+     * 
+     * @return the printable state in a human readable format.
+     */
+    @Override
+    public synchronized String getPrintableState() {
+
+        return String.format(
+                "Internal Block ID: %s" + NL +
+                        "Block Type ID: %s" + NL +
+                        "Default Input Text: %s" + NL +
+                        "Input Text: %s" + NL +
+                        "Result Text: %s" + NL +
+                        "State: %s" + NL +
+                        "Has Error: %s" + NL +
+                        "Error Message: %s" + NL +
+                        "Modified: %s",
+                internalBlockId, blockTypeId, defaultInputText, inputText, resultText, state,
+                hasError, errorMessage, modified);
+    }
+
+    /**
      * Get the block type id from the @BlockPlugin annotation.
      * 
      * @param clazz - the class to get the annotation from.

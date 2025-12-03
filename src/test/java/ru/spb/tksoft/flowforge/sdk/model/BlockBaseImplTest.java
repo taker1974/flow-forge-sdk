@@ -20,6 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -360,6 +361,63 @@ class BlockBaseImplTest {
         block2.setState(RunnableState.DONE);
         // Listener should not be called again after removal
         verify(listener3).onStateChanged(any()); // Only once from before removal
+    }
+
+    @Test
+    void testGetPrintableState() {
+        String printableState = block.getPrintableState();
+
+        assertThat(printableState)
+                .contains("Internal Block ID: " + BLOCK_ID)
+                .contains("Block Type ID: " + BLOCK_TYPE_ID)
+                .contains("Default Input Text: " + DEFAULT_INPUT_TEXT)
+                .contains("Input Text: " + DEFAULT_INPUT_TEXT) // getInputText() returns
+                                                               // defaultInputText if inputText is
+                                                               // blank
+                .contains("Result Text: ")
+                .contains("State: " + RunnableState.READY)
+                .contains("Has Error: false")
+                .contains("Error Message: ")
+                .contains("Modified: true");
+    }
+
+    @Test
+    void testGetPrintableStateWithModifiedFields() {
+        block.setInputText("custom input");
+        block.setState(RunnableState.RUNNING);
+        block.setError(true, "test error");
+        block.resetModified();
+
+        String printableState = block.getPrintableState();
+
+        assertThat(printableState)
+                .contains("Internal Block ID: " + BLOCK_ID)
+                .contains("Block Type ID: " + BLOCK_TYPE_ID)
+                .contains("Default Input Text: " + DEFAULT_INPUT_TEXT)
+                .contains("Input Text: custom input")
+                .contains("State: " + RunnableState.RUNNING)
+                .contains("Has Error: true")
+                .contains("Error Message: test error")
+                .contains("Modified: false");
+    }
+
+    @Test
+    void testGetPrintableStateWithResultText() throws Exception {
+        // Use reflection to call protected setResultText method
+        Method setResultTextMethod =
+                BlockBaseImpl.class.getDeclaredMethod("setResultText", String.class);
+        setResultTextMethod.setAccessible(true);
+        setResultTextMethod.invoke(block, "test result");
+
+        block.setState(RunnableState.DONE);
+        block.resetModified();
+
+        String printableState = block.getPrintableState();
+
+        assertThat(printableState)
+                .contains("Result Text: test result")
+                .contains("State: " + RunnableState.DONE)
+                .contains("Modified: false");
     }
 }
 
