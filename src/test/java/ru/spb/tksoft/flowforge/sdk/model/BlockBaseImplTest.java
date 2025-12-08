@@ -52,20 +52,20 @@ class BlockBaseImplTest {
      */
     private static class TestBlock extends BlockBaseImpl {
 
-        TestBlock(String internalBlockId, String blockTypeId, String defaultInputText) {
-            super(internalBlockId, blockTypeId, defaultInputText);
+        TestBlock(String blockTypeId, String internalBlockId, String defaultInputText) {
+            super(blockTypeId, internalBlockId, defaultInputText);
         }
     }
 
     @BeforeEach
     void setUp() {
-        block = new TestBlock(BLOCK_ID, BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT);
+        block = new TestBlock(BLOCK_TYPE_ID, BLOCK_ID, DEFAULT_INPUT_TEXT);
     }
 
     @Test
     void testConstructor() {
-        assertThat(block.getInternalBlockId()).isEqualTo(BLOCK_ID);
         assertThat(block.getBlockTypeId()).isEqualTo(BLOCK_TYPE_ID);
+        assertThat(block.getInternalBlockId()).isEqualTo(BLOCK_ID);
         assertThat(block.getDefaultInputText()).isEqualTo(DEFAULT_INPUT_TEXT);
         assertThat(block.getState()).isEqualTo(RunnableState.READY);
         assertThat(block.isModified()).isTrue();
@@ -75,34 +75,34 @@ class BlockBaseImplTest {
 
     @Test
     void testConstructorWithNullInternalBlockId() {
-        assertThatThrownBy(() -> new TestBlock(null, BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT))
+        assertThatThrownBy(() -> new TestBlock(BLOCK_TYPE_ID, null, DEFAULT_INPUT_TEXT))
                 .isInstanceOf(NullArgumentException.class)
                 .hasMessageContaining(
-                        "internalBlockId, blockTypeId, defaultInputText must not be null");
+                        "blockTypeId, internalBlockId, defaultInputText must not be null");
     }
 
     @Test
     void testConstructorWithBlankInternalBlockId() {
-        assertThatThrownBy(() -> new TestBlock("", BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT))
+        assertThatThrownBy(() -> new TestBlock(BLOCK_TYPE_ID, "", DEFAULT_INPUT_TEXT))
                 .isInstanceOf(NullArgumentException.class)
                 .hasMessageContaining(
-                        "internalBlockId, blockTypeId, defaultInputText must not be blank");
+                        "blockTypeId, internalBlockId, defaultInputText must not be blank");
     }
 
     @Test
     void testConstructorWithNullBlockTypeId() {
-        assertThatThrownBy(() -> new TestBlock(BLOCK_ID, null, DEFAULT_INPUT_TEXT))
+        assertThatThrownBy(() -> new TestBlock(null, BLOCK_ID, DEFAULT_INPUT_TEXT))
                 .isInstanceOf(NullArgumentException.class)
                 .hasMessageContaining(
-                        "internalBlockId, blockTypeId, defaultInputText must not be null");
+                        "blockTypeId, internalBlockId, defaultInputText must not be null");
     }
 
     @Test
     void testConstructorWithNullDefaultInputText() {
-        assertThatThrownBy(() -> new TestBlock(BLOCK_ID, BLOCK_TYPE_ID, null))
+        assertThatThrownBy(() -> new TestBlock(BLOCK_TYPE_ID, BLOCK_ID, null))
                 .isInstanceOf(NullArgumentException.class)
                 .hasMessageContaining(
-                        "internalBlockId, blockTypeId, defaultInputText must not be null");
+                        "blockTypeId, internalBlockId, defaultInputText must not be null");
     }
 
     @Test
@@ -165,7 +165,7 @@ class BlockBaseImplTest {
 
     @Test
     void testResolveLines() {
-        Block block2 = new TestBlock("block2", BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT);
+        Block block2 = new TestBlock(BLOCK_TYPE_ID, "block2", DEFAULT_INPUT_TEXT);
         Line line1 = mock(Line.class);
         Line line2 = mock(Line.class);
 
@@ -293,7 +293,7 @@ class BlockBaseImplTest {
 
     @Test
     void testRunFromNotConfigured() {
-        TestBlock notConfiguredBlock = new TestBlock("block2", BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT) {
+        TestBlock notConfiguredBlock = new TestBlock(BLOCK_TYPE_ID, "block2", DEFAULT_INPUT_TEXT) {
             @Override
             protected void setState(RunnableState state) {
                 if (state == RunnableState.READY) {
@@ -352,7 +352,7 @@ class BlockBaseImplTest {
 
         block.removeStateChangeListener(listener1);
         // Create a new block to test removal properly
-        TestBlock block2 = new TestBlock("block2", BLOCK_TYPE_ID, DEFAULT_INPUT_TEXT);
+        TestBlock block2 = new TestBlock(BLOCK_TYPE_ID, "block2", DEFAULT_INPUT_TEXT);
         RunnableStateChangeListener listener3 = mock(RunnableStateChangeListener.class);
         block2.addStateChangeListener(listener3);
         block2.setState(RunnableState.READY);
@@ -368,8 +368,8 @@ class BlockBaseImplTest {
         String printableState = block.getPrintableState();
 
         assertThat(printableState)
-                .contains("Internal Block ID: " + BLOCK_ID)
                 .contains("Block Type ID: " + BLOCK_TYPE_ID)
+                .contains("Internal Block ID: " + BLOCK_ID)
                 .contains("Default Input Text: " + DEFAULT_INPUT_TEXT)
                 .contains("Input Text: " + DEFAULT_INPUT_TEXT) // getInputText() returns
                                                                // defaultInputText if inputText is

@@ -84,8 +84,8 @@ public abstract class BlockBaseImpl implements Block {
     public synchronized String getPrintableState() {
 
         return String.format(
-                "Internal Block ID: %s" + NL +
-                        "Block Type ID: %s" + NL +
+                "Block Type ID: %s" + NL +
+                        "Internal Block ID: %s" + NL +
                         "Default Input Text: %s" + NL +
                         "Input Text: %s" + NL +
                         "Result Text: %s" + NL +
@@ -93,7 +93,7 @@ public abstract class BlockBaseImpl implements Block {
                         "Has Error: %s" + NL +
                         "Error Message: %s" + NL +
                         "Modified: %s",
-                internalBlockId, blockTypeId, defaultInputText, getInputText(), resultText, state,
+                blockTypeId, internalBlockId, defaultInputText, getInputText(), resultText, state,
                 hasError, errorMessage, modified);
     }
 
@@ -167,21 +167,21 @@ public abstract class BlockBaseImpl implements Block {
      * @param blockTypeId - the block type id.
      * @param defaultInputText - the default input text.
      */
-    protected BlockBaseImpl(final String internalBlockId,
-            final String blockTypeId, final String defaultInputText) {
+    protected BlockBaseImpl(final String blockTypeId,
+            final String internalBlockId, final String defaultInputText) {
 
-        if (internalBlockId == null || blockTypeId == null || defaultInputText == null) {
+        if (blockTypeId == null || internalBlockId == null || defaultInputText == null) {
             throw new NullArgumentException(
-                    "internalBlockId, blockTypeId, defaultInputText must not be null");
+                    "blockTypeId, internalBlockId, defaultInputText must not be null");
         }
 
-        if (internalBlockId.isBlank() || blockTypeId.isBlank() || defaultInputText.isBlank()) {
+        if (blockTypeId.isBlank() || internalBlockId.isBlank() || defaultInputText.isBlank()) {
             throw new NullArgumentException(
-                    "internalBlockId, blockTypeId, defaultInputText must not be blank");
+                    "blockTypeId, internalBlockId, defaultInputText must not be blank");
         }
 
-        this.internalBlockId = internalBlockId;
         this.blockTypeId = blockTypeId;
+        this.internalBlockId = internalBlockId;
         this.defaultInputText = defaultInputText;
 
         // Set the modified flag to true to force the initial state to be modified.
