@@ -30,7 +30,7 @@ public interface BlockBuilderService {
      * 
      * @return the expected engine version.
      */
-    String expectedEngineVersion();
+    String getExpectedEngineVersion();
 
     /**
      * Get the supported block type ids.
