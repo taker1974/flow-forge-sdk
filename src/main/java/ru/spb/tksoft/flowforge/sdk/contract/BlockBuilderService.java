@@ -26,6 +26,13 @@ import java.util.List;
 public interface BlockBuilderService {
 
     /**
+     * Get the engine version that the block builder service supports.
+     * 
+     * @return the engine version.
+     */
+    String engineVersion();
+
+    /**
      * Get the supported block type ids.
      * 
      * @return the supported block type ids.
