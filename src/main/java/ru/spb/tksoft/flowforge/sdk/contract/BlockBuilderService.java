@@ -26,11 +26,11 @@ import java.util.List;
 public interface BlockBuilderService {
 
     /**
-     * Get the engine version that the block builder service supports.
+     * Get the engine version that the block builder service expects.
      * 
-     * @return the engine version.
+     * @return the expected engine version.
      */
-    String engineVersion();
+    String expectedEngineVersion();
 
     /**
      * Get the supported block type ids.
