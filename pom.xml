@@ -8,7 +8,7 @@
     <groupId>ru.spb.tksoft</groupId>
     <artifactId>flow-forge-sdk</artifactId>
     <name>flow-forge-sdk</name>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
     <description>SDK for creating executable entities for FlowForge project.</description>
 
     <url>http://tksoft.spb.ru</url>
@@ -59,7 +59,7 @@
         <slf4j.version>2.0.17</slf4j.version>
 
         <tk-log-utils.version>2.0.6</tk-log-utils.version>
-        <tk-common-exceptions.version>2.0.5</tk-common-exceptions.version>
+        <tk-common-exceptions.version>2.0.6</tk-common-exceptions.version>
 
     </properties>
 
