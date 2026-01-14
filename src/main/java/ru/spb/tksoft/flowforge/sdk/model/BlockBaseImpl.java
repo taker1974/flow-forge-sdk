@@ -350,6 +350,7 @@ public abstract class BlockBaseImpl implements Block {
      * @param newState - the new state to fire the event for.
      */
     protected void fireStateChanged(RunnableState newState) {
+
         RunnableStateChangedEvent event = new RunnableStateChangedEvent(newState);
         stateChangeListeners.stream().forEach(listener -> listener.onStateChanged(event));
     }
