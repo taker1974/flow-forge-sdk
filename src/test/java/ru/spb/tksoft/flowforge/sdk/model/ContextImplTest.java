@@ -15,7 +15,7 @@
 package ru.spb.tksoft.flowforge.sdk.model;
 
 import static org.assertj.core.api.Assertions.*;
-
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.spb.tksoft.common.exceptions.ObjectAlreadyExistsException;
@@ -25,13 +25,13 @@ import ru.spb.tksoft.common.exceptions.ObjectAlreadyExistsException;
  *
  * @author Konstantin Terskikh, kostus.online.1974@yandex.ru, 2025
  */
-class ContextTest {
+class ContextImplTest {
 
-    private Context context;
+    private ContextImpl context;
 
     @BeforeEach
     void setUp() {
-        context = new Context();
+        context = new ContextImpl();
     }
 
     @Test
@@ -39,8 +39,8 @@ class ContextTest {
         context.put("key1", "value1");
         context.put("key2", 42);
 
-        assertThat(context.get("key1")).isEqualTo("value1");
-        assertThat(context.get("key2")).isEqualTo(42);
+        assertThat(context.get("key1").get()).isEqualTo("value1");
+        assertThat(context.get("key2").get()).isEqualTo(42);
     }
 
     @Test
@@ -53,24 +53,24 @@ class ContextTest {
 
     @Test
     void testGetNonExistentKey() {
-        assertThat(context.get("nonExistent")).isNull();
+        assertThat(context.get("nonExistent").isEmpty()).isTrue();
     }
 
     @Test
     void testUpdate() {
         context.put("key1", "value1");
-        Object result = context.update("key1", "value2");
+        Optional<Object> result = context.update("key1", "value2");
 
-        assertThat(result).isEqualTo("value2");
-        assertThat(context.get("key1")).isEqualTo("value2");
+        assertThat(result.orElse(null)).isEqualTo("value2");
+        assertThat(context.get("key1").orElse(null)).isEqualTo("value2");
     }
 
     @Test
     void testUpdateNonExistentKey() {
-        Object result = context.update("nonExistent", "value");
+        Optional<Object> result = context.update("nonExistent", "value");
 
-        assertThat(result).isNull();
-        assertThat(context.get("nonExistent")).isNull();
+        assertThat(result).isNotPresent();
+        assertThat(context.get("nonExistent")).isNotPresent();
     }
 
     @Test
@@ -101,17 +101,17 @@ class ContextTest {
 
     @Test
     void testIsValidContextKey() {
-        assertThat(Context.isValidContextKey("key1")).isTrue();
-        assertThat(Context.isValidContextKey("key_1")).isTrue();
-        assertThat(Context.isValidContextKey("key#1")).isTrue();
-        assertThat(Context.isValidContextKey("a")).isTrue();
-        assertThat(Context.isValidContextKey("a1")).isTrue();
+        assertThat(context.isValidContextKey("key1")).isTrue();
+        assertThat(context.isValidContextKey("key_1")).isTrue();
+        assertThat(context.isValidContextKey("key#1")).isTrue();
+        assertThat(context.isValidContextKey("a")).isTrue();
+        assertThat(context.isValidContextKey("a1")).isTrue();
 
-        assertThat(Context.isValidContextKey(null)).isFalse();
-        assertThat(Context.isValidContextKey("")).isFalse();
-        assertThat(Context.isValidContextKey("   ")).isFalse();
-        assertThat(Context.isValidContextKey("1key")).isFalse();
-        assertThat(Context.isValidContextKey("key-with-dash")).isFalse();
+        assertThat(context.isValidContextKey(null)).isFalse();
+        assertThat(context.isValidContextKey("")).isFalse();
+        assertThat(context.isValidContextKey("   ")).isFalse();
+        assertThat(context.isValidContextKey("1key")).isFalse();
+        assertThat(context.isValidContextKey("key-with-dash")).isFalse();
     }
 
     @Test
@@ -122,11 +122,11 @@ class ContextTest {
         context.put("boolean", true);
         context.put("object", new Object());
 
-        assertThat(context.get("string")).isEqualTo("value");
-        assertThat(context.get("integer")).isEqualTo(42);
-        assertThat(context.get("double")).isEqualTo(3.14);
-        assertThat((Boolean) context.get("boolean")).isTrue();
-        assertThat(context.get("object")).isNotNull();
+        assertThat(context.get("string").get()).isEqualTo("value");
+        assertThat(context.get("integer").get()).isEqualTo(42);
+        assertThat(context.get("double").get()).isEqualTo(3.14);
+        assertThat((Boolean) context.get("boolean").get()).isTrue();
+        assertThat(context.get("object").get()).isNotNull();
     }
 }
 

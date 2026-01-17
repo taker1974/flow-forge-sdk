@@ -12,19 +12,30 @@
  * the License.
  */
 
-package ru.spb.tksoft.flowforge.sdk.contract.content;
+package ru.spb.tksoft.flowforge.sdk.contract.servicebus;
+
+import java.util.Optional;
 
 /**
- * Content service interface.
+ * Service bus client interface.
  * 
  * @author Konstantin Terskikh, kostus.online.1974@yandex.ru, 2026
  */
-public interface ContentService {
+public interface ServiceBusClient {
 
     /**
-     * Get the engine version that the block builder service expects.
+     * Send a request to the service bus.
      * 
-     * @return the expected engine version.
+     * @param request - the request.
+     * @return the request ID or empty if the request is not sent.
      */
-    String resolveContent(final String sourceContent);
+    Optional<String> sendRequest(ServiceBusRequest request);
+
+    /**
+     * Get a response from the service bus.
+     * 
+     * @param requestId - the request ID.
+     * @return the response or empty if the response is not found.
+     */
+    Optional<ServiceBusResponse> getResponse(String requestId);
 }
